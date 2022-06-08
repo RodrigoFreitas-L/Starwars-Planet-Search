@@ -10,6 +10,13 @@ function PlanetsContextProvider({ children }) {
   const [operator, setOperator] = useState('maior que');
   const [numberFilter, setNumberFilter] = useState(0);
   const [planetSearch, setPlanetSearch] = useState('');
+  const [columns, setColumns] = useState([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
 
   useEffect(() => {
     const fetchPlanets = async () => {
@@ -43,7 +50,7 @@ function PlanetsContextProvider({ children }) {
       }), filteringPlanets);
 
     setFilteredPlanets(multifilter);
-  }, [planetSearch, filterByNumericValues, planets]);
+  }, [planetSearch, filterByNumericValues, planets, columns, setColumns]);
 
   const handlePlanetSearch = ({ target }) => {
     setPlanetSearch(target.value.toLowerCase());
@@ -55,7 +62,12 @@ function PlanetsContextProvider({ children }) {
       comparison: operator,
       value: Number(numberFilter),
     };
-    setFilterByNumericValues([...filterByNumericValues, newNumericFilter]);
+    const numericFilter = [...filterByNumericValues, newNumericFilter];
+    // console.log(numericFilter);
+    const columnOptions = numericFilter.reduce((acc, curr) => acc
+      .filter((option) => option !== curr.column), columns);
+    setColumns(columnOptions);
+    setFilterByNumericValues(numericFilter);
   };
 
   const handleDeleteFilter = (index) => {
@@ -79,6 +91,9 @@ function PlanetsContextProvider({ children }) {
     handleDeleteFilter,
     handleEraseFilters,
     filterByNumericValues,
+    setFilterByNumericValues,
+    columns,
+    setColumns,
     filterByName: { name: planetSearch },
   };
 
