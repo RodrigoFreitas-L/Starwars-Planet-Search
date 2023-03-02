@@ -8,6 +8,7 @@
 <summary><strong>PS</strong></summary><br />
 
 - Projetos desenvolvidos na Trybe serão deixados **as is**, para meu próprio acompanhamento de evolução.
+- Infelizmente o link em que se encontrava hospedado os planetas não está mais no ar por conta do heroku.
 </details>
 
 
